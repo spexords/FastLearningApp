@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace FastLearningApp.Base
 {
-    public class AsyncCommand : IAsyncCommand
+    public class AsyncCommand<T> : IAsyncCommand<T>
     {
         public event EventHandler CanExecuteChanged
         {
@@ -13,35 +13,33 @@ namespace FastLearningApp.Base
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+
         private bool _isExecuting;
-        private readonly Func<Task> _execute;
-        private readonly Func<bool> _canExecute;
+        private readonly Func<T, Task> _execute;
+        private readonly Func<T, bool> _canExecute;
         private readonly IErrorHandler _errorHandler;
 
-        public AsyncCommand(
-            Func<Task> execute,
-            Func<bool> canExecute = null,
-            IErrorHandler errorHandler = null)
+        public AsyncCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, IErrorHandler errorHandler = null)
         {
             _execute = execute;
             _canExecute = canExecute;
             _errorHandler = errorHandler;
         }
 
-        public bool CanExecute()
+        public bool CanExecute(T parameter)
         {
-            return !_isExecuting && (_canExecute?.Invoke() ?? true);
+            return !_isExecuting && (_canExecute?.Invoke(parameter) ?? true);
         }
 
 
-        public async Task ExecuteAsync()
+        public async Task ExecuteAsync(T parameter)
         {
-            if (CanExecute())
+            if (CanExecute(parameter))
             {
                 try
                 {
                     _isExecuting = true;
-                    await _execute();
+                    await _execute(parameter);
                 }
                 finally
                 {
@@ -51,17 +49,17 @@ namespace FastLearningApp.Base
 
         }
 
-      
+
 
         #region Explicit implementations
         bool ICommand.CanExecute(object parameter)
         {
-            return CanExecute();
+            return CanExecute((T)parameter);
         }
 
         void ICommand.Execute(object parameter)
         {
-            ExecuteAsync().FireAndForgetSafeAsync(_errorHandler);
+            ExecuteAsync((T)parameter).FireAndForgetSafeAsync(_errorHandler);
         }
         #endregion
     }

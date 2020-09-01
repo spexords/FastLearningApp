@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vms="clr-namespace:FastLearningApp.ViewModels"
+        xmlns:converters="clr-namespace:FastLearningApp.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.DataContext>
@@ -73,10 +74,21 @@
                        DockPanel.Dock="Top"
                        Text="{Binding CurrentCard.Question}"/>
             <ItemsControl DockPanel.Dock="Top"
+                          IsEnabled="{Binding CurrentCard.IsAnswered, Converter={converters:InvertedBooleanConverter}}"
                           ItemsSource="{Binding CurrentCard.Answers}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="0 2">
+                        <Border>
+                            <Border.Background>
+                                <MultiBinding Converter="{converters:BackgroundAnswerConverter}">
+                                    <Binding RelativeSource="{
+                                                   RelativeSource FindAncestor, 
+                                                   AncestorType={x:Type Window}}" 
+                                             Path="DataContext.CurrentCard.IsAnswered"/>
+                                    <Binding Path="IsValid"/>
+                                    <Binding Path="UserSelection"/>
+                                </MultiBinding>
+                            </Border.Background>
                             <CheckBox Style="{StaticResource CardAnswerContentBox}"
                                       IsChecked="{Binding UserSelection}">
                                 <CheckBox.Content>

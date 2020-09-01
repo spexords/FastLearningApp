@@ -3,9 +3,9 @@ using System.Windows.Input;
 
 namespace FastLearningApp.Base
 {
-    public interface IAsyncCommand : ICommand
+    public interface IAsyncCommand<T> : ICommand
     {
-        Task ExecuteAsync();
-        bool CanExecute();
+        Task ExecuteAsync(T parameter);
+        bool CanExecute(T parameter);
     }
 }

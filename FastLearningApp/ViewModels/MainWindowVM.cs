@@ -30,7 +30,7 @@ namespace FastLearningApp.ViewModels
         #region Commands
         public IAsyncCommand ResetCardsAsyncCommand { get; set; }
         public IAsyncCommand SubmitAnswerCommand { get; set; }
-
+        public IAsyncCommand SelectAnswerCommand { get; set; }
         #endregion
 
         #region Default Constructor
@@ -39,6 +39,7 @@ namespace FastLearningApp.ViewModels
             LoadData();
             ResetCardsAsyncCommand = new AsyncCommand(LoadData);
             SubmitAnswerCommand = new AsyncCommand(SubmitCard);
+            SelectAnswerCommand = new AsyncCommand(SelectAnswer)
         }
 
         #endregion
@@ -74,6 +75,7 @@ namespace FastLearningApp.ViewModels
                 AnsweredCardsCount++;
                 CardsScorePercentage = CorrectCardsCount * 100 / AnsweredCardsCount;
                 CurrentCard.IsAnswered = true;
+                NotifyPropertyChanged("CurrentCard");
             }
             else
             {
@@ -81,6 +83,10 @@ namespace FastLearningApp.ViewModels
             }
         }
 
+        private async Task SelectAnswer()
+        {
+            
+        }
         #endregion
     }
 }
