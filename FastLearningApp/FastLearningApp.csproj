@@ -64,7 +64,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base\AsyncCommand.cs" />
+    <Compile Include="Base\IAsyncCommand.cs" />
+    <Compile Include="Base\IErrorHandler.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\TaskExtensions.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />

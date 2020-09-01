@@ -1,4 +1,5 @@
-﻿using FastLearningApp.Extensions;
+﻿using FastLearningApp.Base;
+using FastLearningApp.Extensions;
 using FastLearningApp.Models;
 using FastLearningApp.ViewModels.Base;
 using Newtonsoft.Json;
@@ -18,11 +19,12 @@ namespace FastLearningApp.ViewModels
 
         #region Properties
         public ObservableCollection<Card> Cards { get; set; }
-        public int QuestionCounter { get; set; } = 1
+        public int QuestionCounter { get; set; } = 1;
         public bool IsShuffleEnabled { get; set; }
         #endregion
 
         #region Commands
+        public IAsyncCommand ResetAsyncCommand { get; set; }
 
         #endregion
 
@@ -30,6 +32,7 @@ namespace FastLearningApp.ViewModels
         public MainWindowVM()
         {
             LoadData();
+            ResetAsyncCommand = new AsyncCommand(ResetCards);
         }
         #endregion
 
