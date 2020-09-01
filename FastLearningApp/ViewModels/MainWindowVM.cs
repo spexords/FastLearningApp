@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,17 +15,21 @@ namespace FastLearningApp.ViewModels
     public class MainWindowVM : BaseViewModel
     {
         #region Members
-        private List<Card> mCleanCards;
         #endregion
 
         #region Properties
         public ObservableCollection<Card> Cards { get; set; }
-        public int QuestionCounter { get; set; } = 1;
+        public Card CurrentCard { get; set; }
+        public int CardIndex { get; set; } 
+        public int CorrectCardsCount { get; set; }
+        public int AnsweredCardsCount { get; set; }
+        public int CardsScorePercentage { get; set; }
         public bool IsShuffleEnabled { get; set; }
         #endregion
 
         #region Commands
-        public IAsyncCommand ResetAsyncCommand { get; set; }
+        public IAsyncCommand ResetCardsAsyncCommand { get; set; }
+        public IAsyncCommand SubmitAnswerCommand { get; set; }
 
         #endregion
 
@@ -32,8 +37,10 @@ namespace FastLearningApp.ViewModels
         public MainWindowVM()
         {
             LoadData();
-            ResetAsyncCommand = new AsyncCommand(ResetCards);
+            ResetCardsAsyncCommand = new AsyncCommand(LoadData);
+            SubmitAnswerCommand = new AsyncCommand(SubmitCard);
         }
+
         #endregion
 
 
@@ -43,28 +50,37 @@ namespace FastLearningApp.ViewModels
             using(var sr = new StreamReader("data.json", Encoding.GetEncoding("windows-1250")))
             {
                 var data = await sr.ReadToEndAsync();
-                mCleanCards = JsonConvert.DeserializeObject<List<Card>>(data);
-                if (Cards == null)
-                {
-                    Cards = new ObservableCollection<Card>(mCleanCards);
-                }
-            }
-        }
-        
-        private async Task ResetCards()
-        {
-            var cards = await Task.Run(() => 
-            {
-                var c = new ObservableCollection<Card>(mCleanCards);
+                Cards = JsonConvert.DeserializeObject<ObservableCollection<Card>>(data);
                 if(IsShuffleEnabled)
                 {
-                    c.Shuffle();
-                }    
-                return c;
-            });
-            QuestionCounter = 1;
-            Cards = cards;
+                    Cards.Shuffle();
+                }
+            }
+            CardIndex = 1;
+            CorrectCardsCount = 0;
+            AnsweredCardsCount = 0;
+            CurrentCard = Cards.First();
         }
+        
+        private async Task SubmitCard()
+        {
+            if (!CurrentCard.IsAnswered)
+            {
+                var correctCard = !await Task.Run(() => CurrentCard.Answers.Any(a => a.UserSelection != a.IsValid));
+                if (correctCard)
+                {
+                    CorrectCardsCount++;
+                }
+                AnsweredCardsCount++;
+                CardsScorePercentage = CorrectCardsCount * 100 / AnsweredCardsCount;
+                CurrentCard.IsAnswered = true;
+            }
+            else
+            {
+                CurrentCard = Cards[++CardIndex - 1];
+            }
+        }
+
         #endregion
     }
 }

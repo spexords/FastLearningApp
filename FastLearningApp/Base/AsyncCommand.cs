@@ -1,8 +1,5 @@
 ﻿using FastLearningApp.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,7 +7,11 @@ namespace FastLearningApp.Base
 {
     public class AsyncCommand : IAsyncCommand
     {
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         private bool _isExecuting;
         private readonly Func<Task> _execute;
@@ -32,6 +33,7 @@ namespace FastLearningApp.Base
             return !_isExecuting && (_canExecute?.Invoke() ?? true);
         }
 
+
         public async Task ExecuteAsync()
         {
             if (CanExecute())
@@ -47,13 +49,9 @@ namespace FastLearningApp.Base
                 }
             }
 
-            RaiseCanExecuteChanged();
         }
 
-        public void RaiseCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+      
 
         #region Explicit implementations
         bool ICommand.CanExecute(object parameter)

@@ -9,6 +9,12 @@
     <Window.DataContext>
         <vms:MainWindowVM/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="R"
+                    Command="{Binding ResetCardsAsyncCommand}"/>
+        <KeyBinding Key="A"
+                    Command="{Binding SubmitAnswerCommand}"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="7*"/>
@@ -20,19 +26,19 @@
                          DockPanel.Dock="Top">
                 <TextBlock Style="{StaticResource HeaderInfo}">
                     <Run Text="Question: "/>
-                    <Run Text="{Binding QuestionCounter}"/><Run 
+                    <Run Text="{Binding CardIndex}"/><Run 
                         Text="/"/><Run 
                         Text="{Binding Cards.Count, Mode=OneWay}"/>
                 </TextBlock>
                 <TextBlock Style="{StaticResource HeaderInfo}"
                            HorizontalAlignment="Right">
                     <Run Text="Score: "/>
-                    <Run Text="1"
+                    <Run Text="{Binding CorrectCardsCount}"
                          Foreground="Green"/><Run 
                          Text="/"/><Run 
-                         Text="5"/>
+                         Text="{Binding AnsweredCardsCount}"/>
                     <Run Text="("/><Run 
-                        Text="50"/><Run 
+                        Text="{Binding CardsScorePercentage}"/><Run 
                         Text="%"/><Run 
                         Text=")"/>
                 </TextBlock>
@@ -40,16 +46,17 @@
             <UniformGrid Columns="2"
                          DockPanel.Dock="Bottom">
                 <Button Style="{StaticResource MainButton}"
+                        Command="{Binding SubmitAnswerCommand}"
                         Margin="0 0 10 0 ">
                     <Button.Content>
                         <TextBlock>
                             <Run Text="ACCEPT"/>
-                            <Run Text="(SPACE)"/>
+                            <Run Text="(A)"/>
                         </TextBlock>
                     </Button.Content>
                 </Button>
                 <Button Style="{StaticResource MainButton}"
-                        Command="{Binding ResetAsyncCommand}"
+                        Command="{Binding ResetCardsAsyncCommand}"
                         Margin="10 0 0 0 ">
                     <Button.Content>
                         <StackPanel>
@@ -62,14 +69,32 @@
                     </Button.Content>
                 </Button>
             </UniformGrid>
-            <ItemsControl DockPanel.Dock="Top">
+            <TextBlock Style="{StaticResource CardQuestion}"
+                       DockPanel.Dock="Top"
+                       Text="{Binding CurrentCard.Question}"/>
+            <ItemsControl DockPanel.Dock="Top"
+                          ItemsSource="{Binding CurrentCard.Answers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0 2">
+                            <CheckBox Style="{StaticResource CardAnswerContentBox}"
+                                      IsChecked="{Binding UserSelection}">
+                                <CheckBox.Content>
+                                    <TextBlock Text="{Binding Content}"
+                                               VerticalAlignment="Center"
+                                               TextWrapping="Wrap"/>
+                                </CheckBox.Content>
+                            </CheckBox>
 
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
         </DockPanel>
         <Viewbox Grid.Column="1"
                  Margin="10">
             <Image HorizontalAlignment="Center"
-                   
+                   Source="{Binding CurrentCard.ImageLink}"
                    VerticalAlignment="Center"/>
         </Viewbox>
     </Grid>

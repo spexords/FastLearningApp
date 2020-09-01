@@ -4,7 +4,7 @@
     <Style TargetType="{x:Type TextBlock}"
            x:Key="HeaderInfo">
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="Foreground" Value="Gray" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -15,7 +15,23 @@
         <Setter Property="FontFamily" Value="Verdana"/>
         <Setter Property="BorderBrush" Value="DarkGray"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="Padding" Value="10"/>
+    </Style>
+    <Style TargetType="{x:Type TextBlock}"
+           x:Key="CardQuestion">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Margin" Value="0 5" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontWeight" Value="DemiBold" />
+    </Style>
+    <Style TargetType="{x:Type CheckBox}"
+           x:Key="CardAnswerContentBox">
+        <Setter Property="Margin" Value="0 3" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
     </Style>
 </ResourceDictionary>
