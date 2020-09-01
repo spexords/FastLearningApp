@@ -5,7 +5,8 @@ FastLearningApp is a quizz application written in WPF which helps in learning.
 FastLearningApp consumes questions from json file - **data.json**
 
 Example file format **data.json** :
-```json 
+
+```json
 [
 	{
 		"Question" : "question?",
@@ -46,7 +47,7 @@ Example file format **data.json** :
 		]
 	}
 ]
-  ```
+```
 
  ## Hotkeys
  There are some hotkeys available:
