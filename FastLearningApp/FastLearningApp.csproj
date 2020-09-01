@@ -64,12 +64,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Base\AsyncCommand.cs" />
+    <Compile Include="Base\AsyncCommandHandler.cs" />
     <Compile Include="Base\IAsyncCommand.cs" />
     <Compile Include="Base\IErrorHandler.cs" />
+    <Compile Include="Base\CommandHandler.cs" />
     <Compile Include="Converters\BackgroundAnswerConverter.cs" />
     <Compile Include="Converters\Base\BaseValueConverter.cs" />
     <Compile Include="Converters\Base\BaseMultiValueConverter.cs" />
+    <Compile Include="Converters\ImageLinkConverter.cs" />
     <Compile Include="Converters\InvertedBooleanConverter.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\TaskExtensions.cs" />

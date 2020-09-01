@@ -6,7 +6,7 @@
         xmlns:vms="clr-namespace:FastLearningApp.ViewModels"
         xmlns:converters="clr-namespace:FastLearningApp.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Fast Learning" Height="450" Width="800">
     <Window.DataContext>
         <vms:MainWindowVM/>
     </Window.DataContext>
@@ -15,6 +15,39 @@
                     Command="{Binding ResetCardsAsyncCommand}"/>
         <KeyBinding Key="A"
                     Command="{Binding SubmitAnswerCommand}"/>
+        <KeyBinding Key="D1"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="0"/>
+        <KeyBinding Key="D2"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="1"/>
+        <KeyBinding Key="D3"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="2"/>
+        <KeyBinding Key="D4"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="3"/>
+        <KeyBinding Key="D5"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="4"/>
+        <KeyBinding Key="D6"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="5"/>
+        <KeyBinding Key="D7"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="6"/>
+        <KeyBinding Key="D8"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="7"/>
+        <KeyBinding Key="D9"
+                    Command="{Binding SelectAnswerCommand}"
+                    CommandParameter="8"/>
+        <KeyBinding Key="Left"
+                    Command="{Binding ChangeCardByArrowsCommand}"
+                    CommandParameter="-1"/>
+        <KeyBinding Key="Right"
+                    Command="{Binding ChangeCardByArrowsCommand}"
+                    CommandParameter="1"/>
     </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,12 +58,25 @@
                    Margin="10">
             <UniformGrid Columns="2"
                          DockPanel.Dock="Top">
-                <TextBlock Style="{StaticResource HeaderInfo}">
-                    <Run Text="Question: "/>
-                    <Run Text="{Binding CardIndex}"/><Run 
-                        Text="/"/><Run 
-                        Text="{Binding Cards.Count, Mode=OneWay}"/>
-                </TextBlock>
+                <WrapPanel>
+                    <TextBlock Style="{StaticResource HeaderInfo}">
+                        <Run Text="Question: "/>
+                    </TextBlock>
+                    <Button Style="{StaticResource ArrowButton}"
+                            Command="{Binding ChangeCardByArrowsCommand}"
+                            CommandParameter="-1"
+                            Content="&lt;"/>
+                    <TextBlock Style="{StaticResource HeaderInfo}">
+                        <Run Text="{Binding CardIndex}"/><Run 
+                             Text="/"/><Run 
+                             Text="{Binding Cards.Count, Mode=OneWay}"/>
+                    </TextBlock>
+                    <Button Style="{StaticResource ArrowButton}"
+                            Command="{Binding ChangeCardByArrowsCommand}"
+                            CommandParameter="1"
+                            Content="&gt;"/>
+                </WrapPanel>
+              
                 <TextBlock Style="{StaticResource HeaderInfo}"
                            HorizontalAlignment="Right">
                     <Run Text="Score: "/>
@@ -106,7 +152,7 @@
         <Viewbox Grid.Column="1"
                  Margin="10">
             <Image HorizontalAlignment="Center"
-                   Source="{Binding CurrentCard.ImageLink}"
+                   Source="{Binding CurrentCard.ImageLink, Converter={converters:ImageLinkConverter}, TargetNullValue={x:Null}}"
                    VerticalAlignment="Center"/>
         </Viewbox>
     </Grid>

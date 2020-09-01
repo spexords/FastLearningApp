@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using FastLearningApp.ViewModels.Base;
+using System.Collections.Generic;
 
 namespace FastLearningApp.Models
 {
 
-    public class Card
+    public class Card : BaseViewModel
     {
         public bool IsAnswered { get; set; }
         public string Question { get; set; }
