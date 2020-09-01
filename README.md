@@ -50,7 +50,7 @@ Example file format **data.json** :
 
  ## Hotkeys
  There are some hotkeys available:
- - 'Left' and 'Right' arrows enable moving between questions.
- - Numeric keys D1-D9 enable answer selection.
- - 'A' submits current question.
- - 'R' resets all questions. 
+ - 'Left' and 'Right' key arrows enable moving between questions.
+ - Numeric keys 'D1'-'D9' enable answer selection.
+ - 'A' key submits current question.
+ - 'R' key resets all questions. 
