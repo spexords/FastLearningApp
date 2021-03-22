@@ -8,44 +8,42 @@ Example file format **data.json** :
 
 ```json
 [
-	{
-		"Question" : "question?",
-		"ImageLink" : " ",
-		"Answers":
-		[
-			{
-				"Content": "a",
-				"IsValid": false
-			},
-			{
-				"Content": "b",
-				"IsValid": true
-			},
-			{
-				"Content": "c",
-				"IsValid": false
-			},
-		]
-	},
-	{
-		"Question" : "question 2?",
-		"ImageLink" : " ",
-		"Answers":
-		[
-			{
-				"Content": "aaa",
-				"IsValid": true
-			},
-			{
-				"Content": "bcc",
-				"IsValid": true
-			},
-			{
-				"Content": "ac",
-				"IsValid": false
-			},
-		]
-	}
+  {
+    "Question": "question?",
+    "ImageLink": " ",
+    "Answers": [
+      {
+        "Content": "a",
+        "IsValid": false
+      },
+      {
+        "Content": "b",
+        "IsValid": true
+      },
+      {
+        "Content": "c",
+        "IsValid": false
+      }
+    ]
+  },
+  {
+    "Question": "question 2?",
+    "ImageLink": " ",
+    "Answers": [
+      {
+        "Content": "aaa",
+        "IsValid": true
+      },
+      {
+        "Content": "bcc",
+        "IsValid": true
+      },
+      {
+        "Content": "ac",
+        "IsValid": false
+      }
+    ]
+  }
 ]
 ```
 
